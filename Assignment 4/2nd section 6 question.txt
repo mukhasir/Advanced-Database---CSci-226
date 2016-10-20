@@ -1,0 +1,24 @@
+/////Using Xpath
+<result>
+<highest density="{max(doc("countries.xml")//country/data(@population div @area))}">
+{doc("countries.xml")//country[(data(@population div @area)) = max(doc("countries.xml")//country/data(@population div @area))]/data(@name)}
+</highest>
+<lowest density="{min(doc("countries.xml")//country/data(@population div @area))}">
+{doc("countries.xml")//country[(data(@population div @area)) = min(doc("countries.xml")//country/data(@population div @area))]/data(@name)}
+</lowest>
+</result>
+
+
+////Using both Xpath an Xquery
+<result>
+<highest density="{max(doc("countries.xml")//country/data(@population div @area))}">
+{for $c in doc("countries.xml")//country
+where $c/data(@population div @area) = max(doc("countries.xml")//country/data(@population div @area))
+return $c/data(@name)}
+</highest>
+<lowest density="{min(doc("countries.xml")//country/data(@population div @area))}">
+{for $c in doc("countries.xml")//country
+where $c/data(@population div @area) = min(doc("countries.xml")//country/data(@population div @area))
+return $c/data(@name)}
+</lowest>
+</result>
